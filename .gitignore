@@ -18,3 +18,7 @@ Saved
 # 插件
 Plugins/**/Binaries/*
 Plugins/**/Intermediate/*
+
+# 构建
+Build/
+Windows/
