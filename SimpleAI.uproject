@@ -23,6 +23,10 @@
 			"Enabled": true
 		},
 		{
+			"Name": "Algorithm",
+			"Enabled": true
+		},
+		{
 			"Name": "OctreeNav",
 			"Enabled": true
 		},

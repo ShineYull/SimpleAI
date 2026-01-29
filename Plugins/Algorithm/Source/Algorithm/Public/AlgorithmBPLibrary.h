@@ -44,7 +44,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
 	static TArray<FPoint> AStarPathfinding(const FPoint& Start, const FPoint& Goal, const TArray<int32>& Grid, int32 GridWidth, int32 GridHeight, bool bUseOctileHeuristic = true);
-
+	
+	static TArray<double> CalculatePolynomialCoefficients(const TArray<double>& Values, int32 Degree);
+	static double EvaluatePolynomial(const TArray<double>& Coefficients, double t);
+	UFUNCTION(BlueprintCallable, Category = "Math|Regression")
+	static TArray<FVector> PredictFuturePositions(const TArray<FVector>& HistoryPositions, int32 Degree, int32 NumFuturePoints,double PredictionInterval = 1);
+	
 private:
 	struct FNode
 	{

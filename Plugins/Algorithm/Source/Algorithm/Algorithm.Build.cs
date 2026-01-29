@@ -1,6 +1,7 @@
 // Some copyright should be here...
 
 using UnrealBuildTool;
+using System.IO;
 
 public class Algorithm : ModuleRules
 {
@@ -10,7 +11,7 @@ public class Algorithm : ModuleRules
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-				// ... add public include paths required here ...
+				Path.Combine(ModuleDirectory, "../ThirdParty/Eigen/eigen-3.4.0")
 			}
 			);
 				
