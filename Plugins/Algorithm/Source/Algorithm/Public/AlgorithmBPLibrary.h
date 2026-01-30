@@ -43,13 +43,23 @@ class UAlgorithmBPLibrary : public UBlueprintFunctionLibrary
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
-	static TArray<FPoint> AStarPathfinding(const FPoint& Start, const FPoint& Goal, const TArray<int32>& Grid, int32 GridWidth, int32 GridHeight, bool bUseOctileHeuristic = true);
-	
+	static void AStarPathfinding(const FPoint& Start, const FPoint& Goal, const TArray<int32>& Grid, int32 GridWidth, int32 GridHeight, TArray<FPoint>& PathPoints);
+
+	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
+	static TArray<FPoint> FloodFill(const FPoint& Start, const TArray<int32>& Grid, int32 GridWidth, int32 GridHeight);
+
+	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
+	static void MergeClosePoints(const TArray<FVector>& PathPoints, TArray<FVector>& MergedPath, float DistanceThreshold);
+	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
+	static void AddMidpointIfFarApart(const TArray<FVector>& PathPoints, TArray<FVector>& InterpolatedPath, float MaxDistanceThreshold);
+	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
+	static void RelaxPath(const TArray<FVector>& PathPoints, TArray<FVector>& RelaxedPath, int32 Iterations, float RelaxationFactor);
+
 	static TArray<double> CalculatePolynomialCoefficients(const TArray<double>& Values, int32 Degree);
 	static double EvaluatePolynomial(const TArray<double>& Coefficients, double t);
 	UFUNCTION(BlueprintCallable, Category = "Math|Regression")
-	static TArray<FVector> PredictFuturePositions(const TArray<FVector>& HistoryPositions, int32 Degree, int32 NumFuturePoints,double PredictionInterval = 1);
-	
+	static TArray<FVector> PredictFuturePositions(const TArray<FVector>& HistoryPositions, int32 Degree, int32 NumFuturePoints, double PredictionInterval = 1);
+
 private:
 	struct FNode
 	{
@@ -72,8 +82,12 @@ private:
 		}
 	};
 
-	static double Heuristic(const FPoint& A, const FPoint& B, bool bUseOctileHeuristic);
+	static FVector2D RotateVector(const FVector2D& Vec, float AngleDegrees);
+	static double Heuristic(const FPoint& A, const FPoint& B);
 	static bool IsValid(const FPoint& P, const TArray<int32>& Grid, int32 GridWidth, int32 GridHeight);
-	static TArray<FPoint> GetNeighbors(const FPoint& P, bool bUseOctileHeuristic);
+	static TArray<FPoint> GetNeighbors(const FPoint& P);
+	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
+	static TArray<FPoint> GetVehicleNeighbors(const FPoint& P, const FVector2D& ForwardVector);
 	static TArray<FPoint> ReconstructPath(TSharedPtr<FNode> Node);
+
 };
