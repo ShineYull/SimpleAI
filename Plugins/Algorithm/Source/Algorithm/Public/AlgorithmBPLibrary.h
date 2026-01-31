@@ -81,13 +81,10 @@ private:
 			return Lhs->F() > Rhs->F();
 		}
 	};
-
-	static FVector2D RotateVector(const FVector2D& Vec, float AngleDegrees);
+	
 	static double Heuristic(const FPoint& A, const FPoint& B);
 	static bool IsValid(const FPoint& P, const TArray<int32>& Grid, int32 GridWidth, int32 GridHeight);
 	static TArray<FPoint> GetNeighbors(const FPoint& P);
-	UFUNCTION(BlueprintCallable, Category = "Pathfinding")
-	static TArray<FPoint> GetVehicleNeighbors(const FPoint& P, const FVector2D& ForwardVector);
 	static TArray<FPoint> ReconstructPath(TSharedPtr<FNode> Node);
 
 };

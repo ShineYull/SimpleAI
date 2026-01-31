@@ -18,7 +18,7 @@
 		{
 			"Name": "Algorithm",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "Default"
 		}
 	]
 }

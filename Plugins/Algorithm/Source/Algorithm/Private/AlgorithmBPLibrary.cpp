@@ -16,16 +16,6 @@ UAlgorithmBPLibrary::UAlgorithmBPLibrary(const FObjectInitializer& ObjectInitial
 
 }
 
-FVector2D UAlgorithmBPLibrary::RotateVector(const FVector2D& Vec, float AngleDegrees)
-{
-	float AngleRadians = FMath::DegreesToRadians(AngleDegrees);
-	float CosAngle = FMath::Cos(AngleRadians);
-	float SinAngle = FMath::Sin(AngleRadians);
-	int32 RotatedX = FMath::RoundToInt(Vec.X * CosAngle - Vec.Y * SinAngle);
-	int32 RotatedY = FMath::RoundToInt(Vec.X * SinAngle + Vec.Y * CosAngle);
-	return FVector2D(RotatedX, RotatedY);
-}
-
 double UAlgorithmBPLibrary::Heuristic(const FPoint& A, const FPoint& B)
 {
 	// Octile heuristic (diagonal movement allowed)
@@ -52,33 +42,6 @@ TArray<FPoint> UAlgorithmBPLibrary::GetNeighbors(const FPoint& P)
 
 	return Neighbors;
 }
-
-TArray<FPoint> UAlgorithmBPLibrary::GetVehicleNeighbors(const FPoint& P, const FVector2D& ForwardVector)
-{
-	TArray<FPoint> Neighbors;
-
-	// Generate neighbors for forward direction
-	FVector2D Forward = ForwardVector;
-	FVector2D ForwardLeft = RotateVector(ForwardVector, -45);
-	FVector2D ForwardRight = RotateVector(ForwardVector, 45);
-
-	// Generate neighbors for backward direction
-	FVector2D Backward = -ForwardVector;
-	FVector2D BackwardLeft = RotateVector(Backward, -45);
-	FVector2D BackwardRight = RotateVector(Backward, 45);
-
-	// Calculate neighboring points and add them to the array
-	Neighbors.Add(FPoint(P.X + Forward.X, P.Y + Forward.Y));
-	Neighbors.Add(FPoint(P.X + ForwardLeft.X, P.Y + ForwardLeft.Y));
-	Neighbors.Add(FPoint(P.X + ForwardRight.X, P.Y + ForwardRight.Y));
-
-	Neighbors.Add(FPoint(P.X + Backward.X, P.Y + Backward.Y));
-	Neighbors.Add(FPoint(P.X + BackwardLeft.X, P.Y + BackwardLeft.Y));
-	Neighbors.Add(FPoint(P.X + BackwardRight.X, P.Y + BackwardRight.Y));
-
-	return Neighbors;
-}
-
 
 TArray<FPoint> UAlgorithmBPLibrary::ReconstructPath(TSharedPtr<FNode> Node)
 {
@@ -116,20 +79,7 @@ void UAlgorithmBPLibrary::AStarPathfinding(const FPoint& Start, const FPoint& Go
 			return;
 		}
 
-		if (Current->Parent != nullptr)
-		{
-			ParentPoint = Current->Parent->Point;
-		}
-		else
-		{
-			ParentPoint.X = Current->Point.X + 1;
-			ParentPoint.Y = Current->Point.Y;
-		}
-
-		FVector2D ForwardVector(ParentPoint.X - Current->Point.X, ParentPoint.Y - Current->Point.Y);
-		ForwardVector.Normalize();
-
-		for (const FPoint& Neighbor : GetVehicleNeighbors(Current->Point, ForwardVector))
+		for (const FPoint& Neighbor : GetNeighbors(Current->Point))
 		{
 			if (!IsValid(Neighbor, Grid, GridWidth, GridHeight)) continue;
 			double TentativeGScore = GScore[Current->Point] + 1.0;
