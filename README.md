@@ -8,21 +8,15 @@
 
 人形：
 
-<video id="Character_Video" controls="" preload="none" poster="封面">
-      <source id="mp4" src="./DemoVideo/Character.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/3f733bd1-dc8d-4db3-8e6d-faa8255ee36a
 
 空中：
 
-<video id="Fly_Video" controls="" preload="none" poster="封面">
-      <source id="mp4" src="./DemoVideo/Fly.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/91ce7a90-6c8c-4b5e-8852-8c38e92f8405
 
 载具：
 
-<video id="Car_Video" controls="" preload="none" poster="封面">
-      <source id="mp4" src="./DemoVideo/Car.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/d8552c19-d270-4466-b099-31e1fcbda2fb
 
 ## 鸣谢
 
